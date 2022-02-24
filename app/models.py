@@ -10,8 +10,6 @@ class UserManager(models.Manager):
             errors['username'] = "Username unavailable"
         if form['password'] != form['confirm']:
             errors['password'] = 'Passwords do not match'
-        if form['regcode'] != REGCODE:
-            error['regcode'] = 'Please enter the correct registration code'
         return errors
 
 class User(models.Model):
@@ -19,6 +17,7 @@ class User(models.Model):
     lastName = models.CharField(max_length=255)
     username = models.CharField(max_length=255)
     password = models.CharField(max_length=255)
+    permissions = models.IntegerField(default=0)
     createdAt = models.DateTimeField(auto_now_add=True)
     updatedAt = models.DateTimeField(auto_now=True)
     objects = UserManager()
