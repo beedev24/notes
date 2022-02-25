@@ -40,12 +40,16 @@ def create_user_profile(sender, instance, created, **kwargs):
 class School(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField(blank=True)
+    createdAt = models.DateTimeField(auto_now_add=True)
+    updatedAt = models.DateTimeField(auto_now=True)
     def __str__(self):
         return self.name
 
 class Institution(models.Model):
     img = models.ImageField(upload_to='schoolImgs', default='beeDevClassRoom.png')
     school = models.OneToOneField(School, unique=True, on_delete=CASCADE)
+    createdAt = models.DateTimeField(auto_now_add=True)
+    updatedAt = models.DateTimeField(auto_now=True)
     def __str__(self):
         return f'{self.school.name} Institution'
 
@@ -58,13 +62,16 @@ class Subject(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField(blank=True)
     length = models.CharField(max_length=255, blank=True)
-    school = models.ForeignKey(School, related_name='theSchool', on_delete=CASCADE, blank=True)
+    createdAt = models.DateTimeField(auto_now_add=True)
+    updatedAt = models.DateTimeField(auto_now=True)
     def __str__(self):
         return self.subject
 
 class Topic(models.Model):
     img = models.ImageField(upload_to='schoolImgs', default='beeDevClassRoom.png')
     subject = models.OneToOneField(Subject, unique=True, on_delete=CASCADE)
+    createdAt = models.DateTimeField(auto_now_add=True)
+    updatedAt = models.DateTimeField(auto_now=True)
     def __str__(self):
         return f'{self.subject.title} Topic'
 
@@ -80,6 +87,9 @@ class Note(models.Model):
     resourceUrl = models.CharField(max_length=255, blank=True)
     code = models.TextField(blank=True)
     codeUrl = models.CharField(max_length=255, blank=True)
+    access = models.BooleanField(default=True)
+    createdAt = models.DateTimeField(auto_now_add=True)
+    updatedAt = models.DateTimeField(auto_now=True)
     user = models.ForeignKey(User, related_name='noteUser', on_delete=CASCADE)
     school = models.ForeignKey(School, related_name='noteSchool', on_delete=CASCADE, blank=True)
     subject = models.ForeignKey(Subject, related_name='noteSubject', on_delete=CASCADE, blank=True)
@@ -88,6 +98,8 @@ class Note(models.Model):
 
 class Memo(models.Model):
     img = models.ImageField(upload_to='noteImgs', default='notebook.png')
+    createdAt = models.DateTimeField(auto_now_add=True)
+    updatedAt = models.DateTimeField(auto_now=True)
     note = models.OneToOneField(Note, unique=True, on_delete=CASCADE)
     def __str__(self):
         return f'{self.note.title} Memo'

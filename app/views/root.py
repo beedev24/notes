@@ -4,18 +4,6 @@ from .models import *
 from .misc import REGCODE
 import bcrypt
 
-def index(request):
-    if 'user_id' not in request.session:
-        return render(request, 'index.html', context)
-    else:
-        user = User.objects.get(id=request.session['user_id'])
-        notes = Note.objects.all().values()
-        context = {
-            'user': user,
-            'notes': notes,
-        }
-        return render(request, 'dashboard.html', context)
-
 def  logReg(request):
     if 'user_id' not in request.session:
         return render(request, 'logReg.html')
