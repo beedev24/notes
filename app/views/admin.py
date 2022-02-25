@@ -12,9 +12,9 @@ def theAdmin(request):
         context = {
             'user': user,
         }
-    pass
+        return render(request, 'logged/admin/theAdmin.html', context)
 
-def SchoolsSubjects(request):
+def schoolsSubjects(request):
     if 'user_id' not in request.session:
         message.error(request, "Page is protected")
         return redirect('/')
