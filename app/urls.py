@@ -11,10 +11,10 @@ urlpatterns = [
     path('logout/', views.logout),
     path('schools/', views.schools),
     path('schools/<int:school_id>/notes/', views.schoolNotes),
-    path('schools/<int_school_id//notes/<int:note_id>/view/', views.viewSchoolNote),
+    path('schools/<int:school_id>/notes/<int:note_id>/view/', views.viewSchoolNote),
     path('subjects/', views.subjects),
     path('subjects/<int:subject_id>/notes/', views.subjectNotes),
-    path('subjects/<int:subject_id>/notes/<int:note_id>/views/', views.viewSubjectNote),
+    path('subjects/<int:subject_id>/notes/<int:note_id>/view/', views.viewSubjectNote),
     path('notes/', views.notes),
     path('notes/<int:note_id>/view/', views.viewNote),
     # Admin

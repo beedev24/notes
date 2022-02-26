@@ -1,6 +1,7 @@
 from django.db import models
 from .misc import *
 from django.db.models.signals import post_save
+from django.db.models.deletion import CASCADE
 
 class UserManager(models.Manager):
     def validate(self, form):

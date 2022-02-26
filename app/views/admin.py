@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from ..models import *
 
-# Landing pages
+# Landing pages 5
 def theAdmin(request):
     if 'user_id' not in request.session:
         messages.error(request, "Page is protected")
@@ -79,7 +79,7 @@ def editNote(request, note_id):
         return render(request, 'logged/admin/editNote.html', context)
 
 
-# Create Routes
+# Create Routes 3
 def createSchool(request):
     School.objects.create(
         name = request.POST['name'],
@@ -107,7 +107,7 @@ def createNote(request):
     return redirect('/theAdmin/notes/')
 
 
-# Update Routes
+# Update Routes 14
 def updateUser(request, user_id):
     toUpdate = User.objects.get(id=request.session['user_id'])
     toUpdate.firstName = request.POST['firstName']
@@ -196,6 +196,8 @@ def updateMemo(request, note_id):
     toUpdate.save()
     return redirect('/theAdmin/notes/')
 
+
+# Delete Routes 3
 def deleteSchool(request, school_id):
     toDelete = School.objects.get(id=school_id)
     toDelete.delete()

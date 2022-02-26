@@ -1,0 +1,50 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="https://images.craftsnherbs.com/bee/IMG_0992.jpg">
+    <link rel='stylesheet' href='https://beedevservices.github.io/beedev-css/framework/beedev.css'>
+    <link rel="stylesheet" href="{% static 'css/styles.css'%}">
+    <title>Note Application</title>
+</head>
+<body>
+    <header>
+        <h1>Welcome to the Notes application</h1>
+        <nav>
+            {% block menu %} {% include 'menus/menu.html' %} {% endblock menu %}
+        </nav>
+    </header>
+    <main>
+        <h2>Please feel free to take a look around at the notes</h2>
+        <h3>We currently have the following stats</h3>
+        <table>
+            <tr>
+                <th>Users adding Notes:</th>
+                <td>{{users}}</td>
+                <td>Request Access to Contribute (coming soon)</td>
+            </tr>
+            <tr>
+                <th>Schools</th>
+                <td>{{schools}}</td>
+                <td><button><a href="/schools/">See Schools</a></button></td>
+            </tr>
+            <tr>
+                <th>Subjects</th>
+                <td>{{subjects}}</td>
+                <td><button><a href="/subjects/">See Subjects</a></button></td>
+            </tr>
+            <tr>
+                <th>Notes</th>
+                <td>{{notes}}</td>
+                <td><button><a href="/notes/">See Notes</a></button></td>
+            </tr>
+        </table>
+    </main>
+    <footer>
+        {% block footer %} {% include 'menus/footer.html' %} {% endblock footer %}
+    </footer>
+</body>
+</html>

@@ -1,0 +1,46 @@
+.flexrow {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+.flexcolumn {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+a {
+    text-decoration: none;
+    color: black;
+}
+table, tr, th, td {
+    border: 1px double black;
+}
+
+body {
+    .flexcolumn();
+
+    header {
+        .flexcolumn();
+
+        nav {
+            .flexrow();
+        }
+    }
+    main {
+        .flexcolumn();
+    }
+    footer {
+        .flexcolumn();
+
+        p {
+            .flexrow();
+
+            a {
+                text-decoration: none;
+                color: black;
+            }
+        }
+    }
+}
