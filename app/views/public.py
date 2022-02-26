@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from .models import *
+from ..models import *
 
 def index(request):
     if 'user_id' not in request.session:
@@ -224,3 +224,7 @@ def viewNote(request, note_id):
             'users': users,
         }
         return render(request, 'logged/viewNote.html', context)
+        
+        
+
+# 9 public functions

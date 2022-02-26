@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from .models import *
-from .misc import REGCODE
+from ..models import *
+from ..misc import REGCODE
 import bcrypt
 
 def  logReg(request):
@@ -59,3 +59,4 @@ def login(request):
     messages.error(request, 'That Username is not in our system, please register for an account')
     return redirect('/login/')
 
+# 4 root functions
