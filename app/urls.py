@@ -21,7 +21,8 @@ urlpatterns = [
     path('theAdmin/', views.theAdmin),
     path('theAdmin/<int:user_id>/profile/', views.profile),
     path('theAdmin/<int:user_id>/profile/user/update/', views.updateUser),
-    path('theAdmin/<int:user_id>/profile/user/permissions/update/', views.updateUserPermission),
+    path('theAdmin/<int:user_id>/profile/user/admin/update/', views.updateUserAdmin),
+    path('theAdmin/<int:user_id>/profile/user/contributor/update/', views.updateUserContributor),
     path('theAdmin/<int:user_id>/profile/profile/update/', views.updateProfile),
     # schools / subjects
     path('theAdmin/school-subject/', views.schoolsSubjects),

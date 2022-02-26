@@ -35,15 +35,14 @@ def register(request):
         password = hashedPw
     )
     request.session['user_id'] = newUser.id
-    if request.POST['regCode'] != REGCODE:
-        toDelete = User.objects.get(id=request.session['user_id'])
-        toDelete.delete()
-        messages.error(request, "A Registration Code is required")
-        return redirect('/')
-    if request.POST['regCode'] == REGCODE:
+    if request.POST['permissions'] == REGCODE:
         toUpdate = User.objects.get(id=request.session['user_id'])
-        toUpdate.level=24
+        toUpdate.permissions=24
         toUpdate.save()
+        return redirect('/')
+    if request.POST['permissions'] != REGCODE:
+        request.session.clear()
+        messages.error(request, "A Registration Code is required")
         return redirect('/')
 
 def login(request):

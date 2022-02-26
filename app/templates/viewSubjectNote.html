@@ -1,0 +1,76 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="https://images.craftsnherbs.com/logos/beeDevClassRoom.png">
+    <link rel='stylesheet' href='https://beedevservices.github.io/beedev-css/framework/beedev.css'>
+    <link rel="stylesheet" href="{% static 'css/styles.css'%}">
+    <title>{{note.title}}</title>
+</head>
+<body>
+    <header>
+        <h1>{{note.title}}</h1>
+        <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; Menu</span>
+        <nav id="nav">
+            {% block menu %} {% include 'menus/menu.html' %} {% endblock menu %}
+        </nav>
+    </header>
+    <main>
+        <div>
+            {% if messages %}
+            <section class='messages'>
+                {% for message in messages %}
+                <h3 {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</h3>
+                {% endfor %}
+            </section>
+            {% endif %}
+        </div>
+            <h1>{{note.title}} - {{subject.title}}</h1>
+        {% for school in schools %}
+            {% if school.id == note.school_id %}
+                <h2>{{school.name}}</h2>
+            {% endif %}
+        {% endfor %}
+        {% if note.access == 0 %}
+            <h3>This is currently a Private Note</h3>
+        {% else %}
+            <h3>This is currently a Public Note</h3>
+        {% endif %}
+        <div class="column">
+            {% if note.content %}
+                <h2>Notes:</h2>
+                <textarea cols="30" rows="60">{{note.content}}</textarea>
+            {% endif %}
+        </div>
+        <div class="row">
+            {% if note.noteUrl %}
+                <a href="{{note.noteUrl}}" target="_blank">External Link to Notes</a>
+            {% endif %}
+            {% if note.resourceUrl %}
+                <a href="{{note.resourceurl" target="_blank">Resource Link</a>
+            {% endif %}
+        </div>
+        <div class="column">
+            {% if note.code %}
+                <h2>Code</h2>
+                <textarea cols="30" rows="60">{{note.code}}</textarea>
+            {% endif %}
+            {% if note.codeUrl %}
+                <a href="{{note.codeUrl">Link to Code</a>
+            {% endif %}
+        </div>
+        {% for user in users %}
+            {% if note.user_id == user.id %}
+                <h3>Note Created by {{user.firstName}} {{user.lastName}}</h3>
+            {% endif %}
+        {% endfor %}
+    </main>
+    <footer>
+        {% block footer %} {% include 'menus/footer.html' %} {% endblock footer %}
+    </footer>
+    <script src="{% static 'js/scripts.js'%}"></script>
+</body>
+</html>

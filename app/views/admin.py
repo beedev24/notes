@@ -9,8 +9,10 @@ def theAdmin(request):
         return redirect('/')
     else:
         user = User.objects.get(id=request.session['user_id'])
+        users = User.objects.all().values().order_by('createdAt')
         context = {
             'user': user,
+            'users': users,
         }
         return render(request, 'logged/admin/theAdmin.html', context)
 
@@ -54,8 +56,10 @@ def profile(request, user_id):
         return redirect('/')
     else:
         user = User.objects.get(id=user_id)
+        theUser = User.objects.get(id=request.session['user_id'])
         context = {
             'user': user,
+            'theUser': theUser,
         }
         return render(request, 'logged/admin/profile.html', context)
 
@@ -109,20 +113,26 @@ def createNote(request):
 
 # Update Routes 14
 def updateUser(request, user_id):
-    toUpdate = User.objects.get(id=request.session['user_id'])
+    toUpdate = User.objects.get(id=user_id)
     toUpdate.firstName = request.POST['firstName']
     toUpdate.lastName = request.POST['lastName']
     toUpdate.save()
     return redirect('/theAdmin/')
 
-def updateUserPermission(request, user_id):
-    toUpdate = User.objects.get(id=request.session['user_id'])
+def updateUserAdmin(request, user_id):
+    toUpdate = User.objects.get(id=user_id)
     toUpdate.permissions = 24
     toUpdate.save()
     return redirect('/theAdmin/')
 
+def updateUserContributor(request, user_id):
+    toUpdate = User.objects.get(id=user_id)
+    toUpdate.permissions = 0
+    toUpdate.save()
+    return redirect('/theAdmin/')
+
 def updateProfile(request, user_id):
-    toUpdate = User.objects.get(id=request.session['user_id'])
+    toUpdate = User.objects.get(id=user_id)
     toUpdate.profile.img = request.FILES['img']
     toUpdate.save()
     return redirect('/theAdmin/')

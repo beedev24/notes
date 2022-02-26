@@ -1,0 +1,65 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="https://images.craftsnherbs.com/logos/beeDevClassRoom.png">
+    <link rel='stylesheet' href='https://beedevservices.github.io/beedev-css/framework/beedev.css'>
+    <link rel="stylesheet" href="{% static 'css/styles.css'%}">
+    <title>{{user.username}}'s Dashboard</title>
+</head>
+<body>
+    <header>
+        <h1>{{user.username}}'s Dashboard</h1>
+        <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; Menu</span>
+        <nav id="nav">
+            {% block menu %} {% include 'menus/loggedMenu.html' %} {% endblock menu %}
+        </nav>
+    </header>
+    <main>
+        <div>
+            {% if messages %}
+            <section class='messages'>
+                {% for message in messages %}
+                <h3 {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</h3>
+                {% endfor %}
+            </section>
+            {% endif %}
+        </div>
+        <div class="profileCard">
+            <h2>Your current information {{user.firstName}} {{user.lastName}}</h2>
+            <img src="{{user.profile.img.url}}" alt="{{user.username}}">
+            <h3>Username: {{user.username}}</h3>
+            {% if user.permissions == 24 %}
+                <h3>You are an Admin user</h3>
+            {% else %}
+                <h3>You are a Note Contributor</h3>
+            {% endif %}
+            <button><a href="/theAdmin/{{user.id}}/profile/">Edit Your information</a></button>
+        </div>
+        <button type="button" class="collapsible">Users</button>
+        <div class="content">
+            <table>
+                <tr>
+                    <th>Username</th>
+                    <th>Name</th>
+                    <th>Edit</th>
+                </tr>
+                {% for user in users %}
+                    <tr>
+                        <td>{{user.username}}</td>
+                        <td>{{user.firstName}} {{user.lastName}}</td>
+                        <td><button><a href="/theAdmin/{{user.id}}/profile/">View User</a></button></td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </main>
+    <footer>
+        {% block footer %} {% include 'menus/footer.html' %} {% endblock footer %}
+    </footer>
+    <script src="{% static 'js/scripts.js'%}"></script>
+</body>
+</html>

@@ -2,6 +2,8 @@
 <html lang="en">
 <body>
     {% block menu %}
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+    <span><img src="{{user.profile.img.url}}" alt="{{user.username}}"><h4>{{user.firstName}}</h4></span>
     <a href="/">Home</a>
     <a href="/schools/">Schools</a>
     <a href="/subjects/">Subjects</a>

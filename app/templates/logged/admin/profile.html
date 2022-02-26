@@ -1,0 +1,101 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="https://images.craftsnherbs.com/logos/beeDevClassRoom.png">
+    <link rel='stylesheet' href='https://beedevservices.github.io/beedev-css/framework/beedev.css'>
+    <link rel="stylesheet" href="{% static 'css/styles.css'%}">
+    <title>{{user.username}}'s Profile</title>
+</head>
+<body>
+    <header>
+        <h1>{{user.username}}'s Profile</h1>
+        <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; Menu</span>
+        <nav id="nav">
+            {% block menu %} {% include 'menus/loggedMenu.html' %} {% endblock menu %}
+        </nav>
+    </header>
+    <main>
+        <div>
+            {% if messages %}
+            <section class='messages'>
+                {% for message in messages %}
+                <h3 {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</h3>
+                {% endfor %}
+            </section>
+            {% endif %}
+        </div>
+        <div class="row">
+            <div class="profileCard">
+                <h2>Current information for {{user.firstName}} {{user.lastName}}</h2>
+                <img src="{{user.profile.img.url}}" alt="{{user.username}}">
+                <h3>Username: {{user.username}}</h3>
+                {% if user.permissions == 24 %}
+                    <h3>User is an Admin user</h3>
+                {% else %}
+                    <h3>User is a Note Contributor</h3>
+                {% endif %}
+            </div>
+            <div class="profileCard">
+                <form action="/theAdmin/{{user.id}}/profile/user/update/" method="post">
+                    {% csrf_token %}
+                    <section>
+                        <label for="firstName">First Name</label>
+                        <input type="text" name="firstName" value="{{user.firstName}}">
+                    </section>
+                    <section>
+                        <label for="lastName">Last Name</label>
+                        <input type="text" name="lastName" value="{{user.lastName}}">
+                    </section>
+                    <input type="hidden" value="{{user.id}}">
+                    <button>Update Name</button>
+                </form>
+            </div>
+        </div>
+        <button type="button" class="collapsible">Other Edits</button>
+        <div class="content">
+            <div class="row">
+                {% if theUser.permissions == 24 %}
+                    <div class="profileCard">
+                        {% if user.permissions == 24 %}
+                            <h2>Make Contributor</h2>
+                            <form action="/theAdmin/{{user.id}}/profile/user/contributor/update/" method="post">
+                                {% csrf_token %}
+                                <input type="hidden" value="{{user.id}}">
+                                <button>Make Contributor</button>
+                            </form>
+                        {% else %}
+                            <h2>Make Admin</h2>
+                            <form action="/theAdmin/{{user.id}}/profile/user/admin/update/" method="post">
+                                {% csrf_token %}
+                                <input type="hidden" value="{{user.id}}">
+                                <button>Make Admin</button>
+                            </form>
+                        {% endif %}
+                    </div>
+                {% endif %}
+                <div class="profileCard">
+                    <h2>Change Profile Image</h2>
+                    <form action="/theAdmin/{{user.id}}/profile/profile/update/" method='post' enctype='multipart/form-data'>
+                        {% csrf_token %}
+                        <section>
+                            <label for="img">Upload Image</label>
+                            <input type="file" name="img" required>
+                        </section>
+                        <p>Current file name: {{user.profile.img}}</p>
+                        <input type="hidden" value="{{user.id}}">
+                        <button>Upload/Update Profile Image</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer>
+        {% block footer %} {% include 'menus/footer.html' %} {% endblock footer %}
+    </footer>
+    <script src="{% static 'js/scripts.js'%}"></script>
+</body>
+</html>
