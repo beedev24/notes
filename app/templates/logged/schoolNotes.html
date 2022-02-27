@@ -19,7 +19,17 @@
         </nav>
     </header>
     <main>
-        <h1>All Notes for {{school.name}}</h1>
+        <div class="messages">
+            {% if messages %}
+                {% for message in messages %}
+                    <h1>{{ message }}</h1>
+                {% endfor %}
+            {% endif %}
+        </div>
+        <div class="row title">
+            <img src="{{school.institution.img.url}}" alt="{{school.name}}">
+            <h1>{{school.name}}</h1>
+        </div>
         <table>
             <tr>
                 <th>Title</th>
@@ -27,17 +37,17 @@
                 <th>View Note</th>
             </tr>
             {% for note in notes %}
-                {% if note.access == 0 %}
-                    <tr>
-                        <td>{{note.title}}</td>
-                        {% for subject in subjects %}
-                            {% if note.subject_id == subject.id %}
-                                <td>{{subject.title}}</td>
-                            {% endif %}
-                        {% endfor %}
-                        <td><button><a href="/schools/{{school.id}}/notes/{{note.id}}/view">View Note</a></button></td>
-                    </tr>
-                {% endif %}
+                <tr>
+                    <td>{{note.title}}</td>
+                    {% for subject in subjects %}
+                        {% if note.subject_id == subject.id %}
+                            <td>{{subject.title}}</td>
+                        {% else %}
+                            <td>N/A</td>
+                        {% endif %}
+                    {% endfor %}
+                    <td><button><a href="/schools/{{school.id}}/notes/{{note.id}}/view">View Note</a></button></td>
+                </tr>
             {% endfor %}
         </table>
     </main>

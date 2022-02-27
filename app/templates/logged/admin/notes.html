@@ -1,0 +1,93 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="https://images.craftsnherbs.com/logos/beeDevClassRoom.png">
+    <link rel='stylesheet' href='https://beedevservices.github.io/beedev-css/framework/beedev.css'>
+    <link rel="stylesheet" href="{% static 'css/styles.css'%}">
+    <title>Notes</title>
+</head>
+<body>
+    <header>
+        <h1>All Notes</h1>
+        <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; Menu</span>
+        <nav id="nav">
+            {% block menu %} {% include 'menus/loggedMenu.html' %} {% endblock menu %}
+        </nav>
+    </header>
+    <main>
+        <div class="messages">
+            {% if messages %}
+                {% for message in messages %}
+                    <h1>{{ message }}</h1>
+                {% endfor %}
+            {% endif %}
+        </div>
+        <h1>Notes Admin</h1>
+            <form action="/theAdmin/notes/create/" method="post">
+                {% csrf_token %}
+                <section>
+                    <label for="title">Note Title</label>
+                    <input type="text" name="title">
+                </section>
+                <section>
+                    <label for="content">Note Content</label>
+                    <textarea name="content" cols="40" rows="20"></textarea>
+                </section>
+                <section>
+                    <label for="access">Private Note?</label>
+                    <select name="access">
+                        <option value="1">Yes</option>
+                        <option value="0">No</option>
+                    </select>
+                </section>
+                <section>
+                    <input type="hidden" name="user" value="{{user.id}}">
+                </section>
+                <section>
+                    <label for="school">Chose School Association</label>
+                    <select name="school">
+                        <option value=""></option>
+                        {% for school in schools %}
+                            <option value="{{school.id}}">{{school.name}}</option>
+                        {% endfor %}
+                    </select>
+                </section>
+                <section>
+                    <label for="subject">Chose Note Subject</label>
+                    <select name="subject">
+                        <option value=""></option>
+                        {% for subject in subjects %}
+                            <option value="{{subject.id}}">{{subject.title}}</option>
+                        {% endfor %}
+                    </select>
+                </section>
+                <button>Add Note</button>
+            </form>
+            <button type="button" class="collapsible">View Current Notes</button>
+            <div class="content">
+                <table class="desktop">
+                    <tr>
+                        <th>Title</th>
+                        <th>Edit Note</th>
+                        <th>Delete</th>
+                    </tr>
+                    {% for note in notes %}
+                        <tr>
+                            <td>{{note.title}}</td>
+                            <td><button><a href="/theAdmin/notes/{{note.id}}/edit/">Edit</a></button></td>
+                            <td><button><a href="/theAdmin/notes/{{note.id}}/delete/">Delete</a></button></td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+    </main>
+    <footer>
+        {% block footer %} {% include 'menus/footer.html' %} {% endblock footer %}
+    </footer>
+    <script src="{% static 'js/scripts.js'%}"></script>
+</body>
+</html>

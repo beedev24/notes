@@ -15,13 +15,30 @@ a {
     color: black;
 }
 table, tr, th, td {
-    border: 1px double black;
+    border: 2px double black;
 }
 th, td {
     padding: 1em;
     margin: 1em;
     text-align: center;
     min-width: 50px;
+}
+form {
+    .flexcolumn();
+    border: 2px groove pink;
+    padding: 1em;
+    margin: 1em;
+
+    section {
+        .flexrow();
+        width: 95%;
+        justify-content: space-between;
+
+        label {
+            margin: 1em;
+
+        }
+    }
 }
 
 body {
@@ -80,6 +97,16 @@ body {
     main {
         .flexcolumn();
 
+        .messages {
+            .flexcolumn();
+
+            h1 {
+                padding: 1em;
+                border: 3px groove pink;
+                background-color: #ffc0cb67;
+            }
+        }
+
         button {
             background-color: pink;
             padding: .5em;
@@ -101,9 +128,15 @@ body {
             color: pink;
         }
         .content {
-            padding: 0 18px;
+            padding: 18px;
             display: none;
             overflow: hidden;
+            width: 50%;
+            background-color: #ffc0cb67;
+
+            table {
+                margin: auto;
+            }
 
             .row {
                 .flexrow();
@@ -123,6 +156,8 @@ body {
         }
         .row {
             .flexrow();
+            align-items: flex-start;
+            
 
             .profileCard {
                 .flexcolumn();
@@ -132,6 +167,24 @@ body {
                     max-width: 200px;
                 }
             }
+            .column {
+                .flexcolumn();
+                margin: 1em 2em;
+
+                img {
+                    max-width: 300px;
+                }
+            }
+        }
+        .title {
+            .flexrow();
+            padding: 1em 3em;
+
+            img {
+                max-width: 100px;
+                margin: 0 2em;
+            }
+
         }
     }
     footer {

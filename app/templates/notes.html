@@ -19,6 +19,13 @@
         </nav>
     </header>
     <main>
+        <div class="messages">
+            {% if messages %}
+                {% for message in messages %}
+                    <h1>{{ message }}</h1>
+                {% endfor %}
+            {% endif %}
+        </div>
         <h1>All Notes</h1>
         <table class="desktop">
             <tr>
@@ -34,11 +41,15 @@
                         {% for school in schools %}
                             {% if note.school_id == school.id %}
                                 <td>{{school.name}}</td>
+                            {% else %}
+                                <td>N/A</td>
                             {% endif %}
                         {% endfor %}
                         {% for subject in subjects %}
                             {% if note.subject_id == subject.id %}
                                 <td>{{subject.title}}</td>
+                            {% else %}
+                                <td>N/A</td>
                             {% endif %}
                         {% endfor %}
                         <td><button><a href="/notes/{{note.id}}/view/">View</a></button></td>

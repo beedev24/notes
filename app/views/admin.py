@@ -63,6 +63,32 @@ def profile(request, user_id):
         }
         return render(request, 'logged/admin/profile.html', context)
 
+def editSchool(request, school_id):
+    if 'user_id' not in request.session:
+        messages.error(request, "Page is protected")
+        return redirect('/')
+    else:
+        user = User.objects.get(id=request.session['user_id'])
+        school = School.objects.get(id=school_id)
+        context ={
+            'user': user,
+            'school': school,
+        }
+        return render(request, 'logged/admin/editSchool.html', context)
+
+def editSubject(request, subject_id):
+    if 'user_id' not in request.session:
+        messages.error(request, "Page is protected")
+        return redirect('/')
+    else:
+        user = User.objects.get(id=request.session['user_id'])
+        subject = Subject.objects.get(id=subject_id)
+        context ={
+            'user': user,
+            'subject': subject,
+        }
+        return render(request, 'logged/admin/editSubject.html', context)
+
 def editNote(request, note_id):
     if 'user_id' not in request.session:
         messages.error(request, "Page is protected")
@@ -89,6 +115,7 @@ def createSchool(request):
         name = request.POST['name'],
         description = request.POST['description'],
     )
+    messages.error(request, 'School Created')
     return redirect('/theAdmin/school-subject/')
 
 def createSubject(request):
@@ -97,6 +124,7 @@ def createSubject(request):
         description = request.POST['description'],
         length = request.POST['length'],
     )
+    messages.error(request, 'Subject created')
     return redirect('/theAdmin/school-subject/')
 
 def createNote(request):
@@ -108,6 +136,7 @@ def createNote(request):
         school_id = request.POST['school'],
         subject_id = request.POST['subject'],
     )
+    messages.error(request, 'Note created')
     return redirect('/theAdmin/notes/')
 
 
@@ -117,24 +146,28 @@ def updateUser(request, user_id):
     toUpdate.firstName = request.POST['firstName']
     toUpdate.lastName = request.POST['lastName']
     toUpdate.save()
+    messages.error(request, 'User updated')
     return redirect('/theAdmin/')
 
 def updateUserAdmin(request, user_id):
     toUpdate = User.objects.get(id=user_id)
     toUpdate.permissions = 24
     toUpdate.save()
+    messages.error(request, 'User permissions changed to Admin')
     return redirect('/theAdmin/')
 
 def updateUserContributor(request, user_id):
     toUpdate = User.objects.get(id=user_id)
     toUpdate.permissions = 0
     toUpdate.save()
+    messages.error(request, 'User permissions changed to Contributor')
     return redirect('/theAdmin/')
 
 def updateProfile(request, user_id):
     toUpdate = User.objects.get(id=user_id)
     toUpdate.profile.img = request.FILES['img']
     toUpdate.save()
+    messages.error(request, 'User Profile Images updated')
     return redirect('/theAdmin/')
 
 def updateSchool(request, school_id):
@@ -142,13 +175,15 @@ def updateSchool(request, school_id):
     toUpdate.name = request.POST['name']
     toUpdate.description = request.POST['description']
     toUpdate.save()
-    return redirect('/theAdmin/school-subject/')
+    messages.error(request, 'School information updated')
+    return redirect(f'/theAdmin/school-subject/school/{school_id}/edit/')
 
 def updateInstitution(request, school_id):
     toUpdate = School.objects.get(id=school_id)
     toUpdate.institution.img = request.FILES['img']
     toUpdate.save()
-    return redirect('/theAdmin/school-subject/')
+    messages.error(request, 'School Image updated')
+    return redirect(f'/theAdmin/school-subject/school/{school_id}/edit/')
 
 def updateSubject(request, subject_id):
     toUpdate = Subject.objects.get(id=subject_id)
@@ -156,54 +191,78 @@ def updateSubject(request, subject_id):
     toUpdate.description = request.POST['description']
     toUpdate.length = request.POST['length']
     toUpdate.save()
-    return redirect('/theAdmin/school-subject/')
+    messages.error(request, 'Subject information updated')
+    return redirect(f'/theAdmin/school-subject/subject/{subject_id}/edit/')
 
 def updateTopic(request, subject_id):
     toUpdate = Subject.objects.get(id=subject_id)
     toUpdate.topic.img = request.FILES['img']
     toUpdate.save()
-    return redirect('/theAdmin/school-subject/')
+    messages.error(request, 'Subject image updated')
+    return redirect(f'/theAdmin/school-subject/subject/{subject_id}/edit/')
 
 def updateNote(request, note_id):
     toUpdate = Note.objects.get(id=note_id)
     toUpdate.title = request.POST['title']
     toUpdate.content = request.POST['content']
     toUpdate.save()
+    messages.error(request, 'Note information updated')
+    return redirect('/theAdmin/notes/')
+
+def updateNoteSchool(request, note_id):
+    toUpdate = Note.objects.get(id=note_id)
+    toUpdate.school_id = request.POST['school']
+    toUpdate.save()
+    messages.error(request, 'Note School updated')
+    return redirect('/theAdmin/notes/')
+
+def updateNoteSubject(request, note_id):
+    toUpdate = Note.objects.get(id=note_id)
+    toUpdate.subject_id = request.POST['subject']
+    toUpdate.save()
+    messages.error(requst, 'Note Subject updated')
     return redirect('/theAdmin/notes/')
 
 def updateNoteAccess(request, note_id):
     toUpdate = Note.objects.get(id=note_id)
     toUpdate.access = request.POST['access']
     toUpdate.save()
+    messages.error(request, 'Note Privacy updated')
     return redirect('/theAdmin/notes/')
 
 def updateNoteUrl(request, note_id):
     toUpdate = Note.objects.get(id=note_id)
     toUpdate.noteUrl = request.POST['noteUrl']
     toUpdate.save()
+    messages.error(request, 'Note Link updated')
     return redirect('/theAdmin/notes/')
 
 def updateResourceUrl(request, note_id):
     toUpdate = Note.objects.get(id=note_id)
     toUpdate.resourceUrl = request.POST['resourceUrl']
     toUpdate.save()
+    messages.error(request, 'Note Resource Link updated')
     return redirect('/theAdmin/notes/')
 
 def updateNoteCode(request, note_id):
     toUpdate = Note.objects.get(id=note_id)
     toUpdate.code = request.POST['code']
+    toUpdate.save()
+    messages.error(request, 'Note Code block updated')
     return redirect('/theAdmin/notes/')
 
 def updateNoteCodeUrl(request, note_id):
     toUpdate = Note.objects.get(id=note_id)
     toUpdate.codeUrl = request.POST['codeUrl']
     toUpdate.save()
+    messages.error(request, 'Note Code Link updated')
     return redirect('/theAdmin/notes/')
 
 def updateMemo(request, note_id):
     toUpdate = Note.objects.get(id=note_id)
     toUpdate.memo.img = request.FILES['img']
     toUpdate.save()
+    messages.error(request, 'Note Image updated')
     return redirect('/theAdmin/notes/')
 
 
@@ -211,14 +270,17 @@ def updateMemo(request, note_id):
 def deleteSchool(request, school_id):
     toDelete = School.objects.get(id=school_id)
     toDelete.delete()
+    messages.error(request, 'School Deleted')
     return redirect('/theAdmin/school-subject/')
 
 def deleteSubject(request, subject_id):
     toDelete = Subject.objects.get(id=subject_id)
     toDelete.delete()
+    messages.error(request, 'Subject Deleted')
     return redirect('/theAdmin/school-subject/')
 
 def deleteNote(request, note_id):
     toDelete = Note.objects.get(id=note_id)
     toDelete.delete()
+    messages.error(request, 'Note Deleted')
     return redirect('/theAdmin/notes/')

@@ -19,6 +19,13 @@
         </nav>
     </header>
     <main>
+        <div class="messages">
+            {% if messages %}
+                {% for message in messages %}
+                    <h1>{{ message }}</h1>
+                {% endfor %}
+            {% endif %}
+        </div>
         <h2>Please feel free to take a look around at the notes</h2>
         <h3>We currently have the following stats</h3>
         <table>

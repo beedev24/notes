@@ -12,14 +12,24 @@
 </head>
 <body>
     <header>
-        <h1>All Notes for {{subject.title}}</h1>
+        <h1>All {{subject.title}} related notes</h1>
         <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; Menu</span>
         <nav id="nav">
             {% block menu %} {% include 'menus/loggedMenu.html' %} {% endblock menu %}
         </nav>
     </header>
     <main>
-        <h1>All Notes for {{subject.title}}</h1>
+        <div class="messages">
+            {% if messages %}
+                {% for message in messages %}
+                    <h1>{{ message }}</h1>
+                {% endfor %}
+            {% endif %}
+        </div>
+        <div class="row title">
+            <img src="{{subject.topic.img.url}}" alt="{{subject.title}}">
+            <h1>{{subject.title}}</h1>
+        </div>
         <table>
             <tr>
                 <th>Title</th>
@@ -27,17 +37,17 @@
                 <th>View Note</th>
             </tr>
             {% for note in notes %}
-                {% if note.access == 0 %}
-                    <tr>
-                        <td>{{note.title}}</td>
-                        {% for school in schools %}
-                            {% if note.school_id == school.id %}
-                                <td>{{school.name}}</td>
-                            {% endif %}
-                        {% endfor %}
-                        <td><button><a href="/subjects/{{subject.id}}/notes/{{note.id}}/view">View Note</a></button></td>
-                    </tr>
-                {% endif %}
+                <tr>
+                    <td>{{note.title}}</td>
+                    {% for school in schools %}
+                        {% if note.school_id == school.id %}
+                            <td>{{school.name}}</td>
+                        {% else %}
+                            <td>N/A</td>
+                        {% endif %}
+                    {% endfor %}
+                    <td><button><a href="/subjects/{{subject.id}}/notes/{{note.id}}/view">View Note</a></button></td>
+                </tr>
             {% endfor %}
         </table>
     </main>

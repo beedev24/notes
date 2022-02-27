@@ -39,6 +39,7 @@ def register(request):
         toUpdate = User.objects.get(id=request.session['user_id'])
         toUpdate.permissions=24
         toUpdate.save()
+        messages.error(request, 'Account created')
         return redirect('/')
     if request.POST['permissions'] != REGCODE:
         request.session.clear()
@@ -51,6 +52,7 @@ def login(request):
         userLogin = user[0]
         if bcrypt.checkpw(request.POST['password'].encode(), userLogin.password.encode()):
             request.session['user_id'] = userLogin.id
+            messages.error(request, 'You are now logged in')
             return redirect('/')
         messages.error(request, 'Invalid Credentials')
         return redirect('/login/')

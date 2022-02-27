@@ -1,0 +1,105 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="https://images.craftsnherbs.com/logos/beeDevClassRoom.png">
+    <link rel='stylesheet' href='https://beedevservices.github.io/beedev-css/framework/beedev.css'>
+    <link rel="stylesheet" href="{% static 'css/styles.css'%}">
+    <title>Schools & Subjects</title>
+</head>
+<body>
+    <header>
+        <h1>Schools & Subjects</h1>
+        <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; Menu</span>
+        <nav id="nav">
+            {% block menu %} {% include 'menus/loggedMenu.html' %} {% endblock menu %}
+        </nav>
+    </header>
+    <main>
+        <div class="messages">
+            {% if messages %}
+                {% for message in messages %}
+                    <h1>{{ message }}</h1>
+                {% endfor %}
+            {% endif %}
+        </div>
+        <div class="row">
+            <div class="column">
+                <h2>Add Schools</h2>
+                <form action="/theAdmin/school-subject/school/create/" method="post">
+                    {% csrf_token %}
+                    <section>
+                        <label for="name">School Name</label>
+                        <input type="text" name="name">
+                    </section>
+                    <section>
+                        <label for="description">Description</label>
+                        <textarea name="description" cols="30" rows="10"></textarea>
+                    </section>
+                    <button>Add School</button>
+                </form>
+            </div>
+            <div class="column">
+                <h2>Add Subjects</h2>
+                <form action="/theAdmin/school-subject/subject/create/" method="post">
+                    {% csrf_token %}
+                    <section>
+                        <label for="title">Subject</label>
+                        <input type="text" name="title">
+                    </section>
+                    <section>
+                        <label for="description">Description</label>
+                        <textarea name="description" cols="30" rows="10"></textarea>
+                    </section>
+                    <section>
+                        <label for="length">Course Length</label>
+                        <input type="text" name="length">
+                    </section>
+                    <button>Add Subject</button>
+                </form>
+            </div>
+        </div>
+        <button type="button" class="collapsible">View Schools</button>
+        <div class="content">
+            <table>
+                <tr>
+                    <th>School Name</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                </tr>
+                {% for school in schools %}
+                    <tr>
+                        <td>{{school.name}}</td>
+                        <td><button><a href="/theAdmin/school-subject/school/{{school.id}}/edit/">Edit</a></button></td>
+                        <td><button><a href="/theAdmin/school-subject/school/{{school.id}}/delete/">Delete</a></button></td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+        <button type="button" class="collapsible">View Subjects</button>
+        <div class="content">
+            <table>
+                <tr>
+                    <th>Subject</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                </tr>
+                {% for subject in subjects %}
+                    <tr>
+                        <td>{{subject.title}}</td>
+                        <td><button><a href="/theAdmin/school-subject/subject/{{subject.id}}/edit/">Edit</a></button></td>
+                        <td><button><a href="/theAdmin/school-subject/subject/{{subject.id}}/delete/">Delete</a></button></td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </main>
+    <footer>
+        {% block footer %} {% include 'menus/footer.html' %} {% endblock footer %}
+    </footer>
+    <script src="{% static 'js/scripts.js'%}"></script>
+</body>
+</html>

@@ -18,7 +18,7 @@ table,
 tr,
 th,
 td {
-  border: 1px double black;
+  border: 2px double black;
 }
 th,
 td {
@@ -26,6 +26,26 @@ td {
   margin: 1em;
   text-align: center;
   min-width: 50px;
+}
+form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 2px groove pink;
+  padding: 1em;
+  margin: 1em;
+}
+form section {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 95%;
+  justify-content: space-between;
+}
+form section label {
+  margin: 1em;
 }
 body {
   display: flex;
@@ -95,6 +115,17 @@ body main {
   justify-content: center;
   align-items: center;
 }
+body main .messages {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+body main .messages h1 {
+  padding: 1em;
+  border: 3px groove pink;
+  background-color: #ffc0cb67;
+}
 body main button {
   background-color: pink;
   padding: 0.5em;
@@ -117,9 +148,14 @@ body main .collapsible:hover {
   color: pink;
 }
 body main .content {
-  padding: 0 18px;
+  padding: 18px;
   display: none;
   overflow: hidden;
+  width: 50%;
+  background-color: #ffc0cb67;
+}
+body main .content table {
+  margin: auto;
 }
 body main .content .row {
   display: flex;
@@ -148,6 +184,7 @@ body main .row {
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  align-items: flex-start;
 }
 body main .row .profileCard {
   display: flex;
@@ -158,6 +195,27 @@ body main .row .profileCard {
 }
 body main .row .profileCard img {
   max-width: 200px;
+}
+body main .row .column {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 1em 2em;
+}
+body main .row .column img {
+  max-width: 300px;
+}
+body main .title {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 1em 3em;
+}
+body main .title img {
+  max-width: 100px;
+  margin: 0 2em;
 }
 body footer {
   display: flex;

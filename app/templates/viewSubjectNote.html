@@ -19,31 +19,35 @@
         </nav>
     </header>
     <main>
-        <div>
+        <div class="messages">
             {% if messages %}
-            <section class='messages'>
                 {% for message in messages %}
-                <h3 {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</h3>
+                    <h1>{{ message }}</h1>
                 {% endfor %}
-            </section>
             {% endif %}
         </div>
-            <h1>{{note.title}} - {{subject.title}}</h1>
+        <h1>{{note.title}} - {{subject.title}}</h1>
         {% for school in schools %}
             {% if school.id == note.school_id %}
                 <h2>{{school.name}}</h2>
             {% endif %}
         {% endfor %}
-        {% if note.access == 0 %}
-            <h3>This is currently a Private Note</h3>
-        {% else %}
-            <h3>This is currently a Public Note</h3>
-        {% endif %}
-        <div class="column">
-            {% if note.content %}
-                <h2>Notes:</h2>
-                <textarea cols="30" rows="60">{{note.content}}</textarea>
-            {% endif %}
+        <div class="row">
+            <div class="column">
+                {% if note.content %}
+                    <h2>Notes:</h2>
+                    <textarea cols="40" rows="20" disabled>{{note.content}}</textarea>
+                {% endif %}
+            </div>
+            <div class="column">
+                <img src="{{note.memo.img.url}}" alt="{{note.title}}">
+                {% if note.memo.img == 'notebook.png' %}
+                    <h3>Currently Default Image</h3>
+                {% else %}
+                    <h3>Note Image</h3>
+                    <button><a href="{{note.memo.img.url}}" download>Download Image</a></button>
+                {% endif %}
+            </div>
         </div>
         <div class="row">
             {% if note.noteUrl %}
@@ -56,7 +60,8 @@
         <div class="column">
             {% if note.code %}
                 <h2>Code</h2>
-                <textarea cols="30" rows="60">{{note.code}}</textarea>
+                <textarea cols="40" rows="20" id='copyCode' disabled>{{note.code}}</textarea>
+                <button onclick='copyCode()'>Copy code</button>
             {% endif %}
             {% if note.codeUrl %}
                 <a href="{{note.codeUrl">Link to Code</a>
@@ -67,6 +72,14 @@
                 <h3>Note Created by {{user.firstName}} {{user.lastName}}</h3>
             {% endif %}
         {% endfor %}
+        <button type="button" class="collapsible">Other {{subject.title}} Notes</button>
+        <div class="content">
+            <ul>
+                {% for note in notes %}
+                    <li><a href="/subjects/{{subject.id}}/notes/{{note.id}}/view/">{{note.title}}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
     </main>
     <footer>
         {% block footer %} {% include 'menus/footer.html' %} {% endblock footer %}

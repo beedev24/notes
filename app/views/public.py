@@ -101,7 +101,7 @@ def notes(request):
 def schoolNotes(request, school_id):
     if 'user_id' not in request.session:
         school = School.objects.get(id=school_id)
-        notes = Note.objects.all().values().order_by('subject_id')
+        notes = Note.objects.all().values().filter(school_id=school_id)
         subjects = Subject.objects.all().values()
         context = {
             'school': school,
@@ -112,7 +112,7 @@ def schoolNotes(request, school_id):
     else:
         user = User.objects.get(id=request.session['user_id'])
         school = School.objects.get(id=school_id)
-        notes = Note.objects.all().values().order_by('subject_id')
+        notes = Note.objects.all().values().filter(school_id=school_id)
         subjects = Subject.objects.all().values()
         context = {
             'user': user,
@@ -128,12 +128,13 @@ def viewSchoolNote(request, school_id, note_id):
         school = School.objects.get(id=school_id)
         subjects = Subject.objects.all().values()
         users = User.objects.all().values()
-        notes = Note.objects.all().values().order_by('title')
+        notes = Note.objects.all().values().filter(school_id=school_id)
         context = {
             'note': note,
             'school': school,
             'subjects': subjects,
             'users': users,
+            'notes': notes,
         }
         return render(request, 'viewSchoolNote.html', context)
     else:
@@ -142,7 +143,7 @@ def viewSchoolNote(request, school_id, note_id):
         school = School.objects.get(id=school_id)
         subjects = Subject.objects.all().values()
         users = User.objects.all().values()
-        notes = Note.objects.all().values().order_by('title')
+        notes = Note.objects.all().values().filter(school_id=school_id)
         context = {
             'user': user,
             'note': note,
@@ -156,7 +157,7 @@ def viewSchoolNote(request, school_id, note_id):
 def subjectNotes(request, subject_id):
     if 'user_id' not in request.session:
         subject = Subject.objects.get(id=subject_id)
-        notes = Note.objects.all().values().order_by('title')
+        notes = Note.objects.all().values().filter(subject_id=subject_id)
         schools = School.objects.all().values()
         context = {
             'subject': subject,
@@ -167,7 +168,7 @@ def subjectNotes(request, subject_id):
     else:
         user = User.objects.get(id=request.session['user_id'])
         subject = Subject.objects.get(id=subject_id)
-        notes = Note.objects.all().values().order_by('title')
+        notes = Note.objects.all().values().filter(subject_id=subject_id)
         schools = School.objects.all().values()
         context = {
             'user': user,
@@ -183,7 +184,7 @@ def viewSubjectNote(request, subject_id, note_id):
         schools = School.objects.all().values()
         subject = Subject.objects.get(id=subject_id)
         users = User.objects.all().values()
-        notes = Note.objects.all().values().order_by('title')
+        notes = Note.objects.all().values().filter(subject_id=subject_id)
         context = {
             'note': note,
             'schools': schools,
@@ -198,7 +199,7 @@ def viewSubjectNote(request, subject_id, note_id):
         schools = School.objects.all().values()
         subject = Subject.objects.get(id=subject_id)
         users = User.objects.all().values()
-        notes = Note.objects.all().values().order_by('title')
+        notes = Note.objects.all().values().filter(subject_id=subject_id)
         context = {
             'user': user,
             'note': note,

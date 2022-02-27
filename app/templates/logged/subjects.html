@@ -19,6 +19,13 @@
         </nav>
     </header>
     <main>
+        <div class="messages">
+            {% if messages %}
+                {% for message in messages %}
+                    <h1>{{ message }}</h1>
+                {% endfor %}
+            {% endif %}
+        </div>
         <h1>All the Subjects where notes were taken</h1>
         <table>
             <tr>
@@ -27,13 +34,15 @@
                 <th>View Subject</th>
             </tr>
             {% for subject in subjects %}
-                <td>{{subject.title}}</td>
-                {% for note in notes %}
+                <tr>
+                    <td>{{subject.title}}</td>
                     {% if subject.id == note.subject_id %}
                         <td>{{count}}</td>
+                    {% else %}
+                        <td>0</td>
                     {% endif %}
-                {% endfor %}
-                <td><button><a href="/subjects/{{subject.id}}/notes/">View Notes</a></button></td>
+                    <td><button><a href="/subjects/{{subject.id}}/notes/">View Notes</a></button></td>
+                </tr>
             {% endfor %}
         </table>
     </main>
