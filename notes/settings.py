@@ -81,20 +81,9 @@ WSGI_APPLICATION = 'notes.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'thehives_notes',
-        'USER': 'root',
-        'PASSWORD': 'HoneyBee#4',
-        'HOST': 'localhost',
-        'PORT': '3306',
-    }
-}
-
 # DATABASES = {
 #     'default': {
-#         'ENGINE': 'mysql.connector.django',
+#         'ENGINE': 'django.db.backends.mysql',
 #         'NAME': 'thehives_notes',
 #         'USER': 'root',
 #         'PASSWORD': 'HoneyBee#4',
@@ -102,6 +91,17 @@ DATABASES = {
 #         'PORT': '3306',
 #     }
 # }
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'mysql.connector.django',
+        'NAME': 'thehives_notes',
+        'USER': 'root',
+        'PASSWORD': 'HoneyBee#4',
+        'HOST': 'localhost',
+        'PORT': '3306',
+    }
+}
 
 
 # Password validation

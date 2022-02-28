@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from ..models import *
+import logging
 
 def index(request):
     if 'user_id' not in request.session:
@@ -14,6 +15,8 @@ def index(request):
             'schools': schools,
             'subjects': subjects,
         }
+        print('not logged index notes', notes)
+        logging.info('not logged index notes', notes)
         return render(request, 'index.html', context)
     else:
         user = User.objects.get(id=request.session['user_id'])
@@ -28,6 +31,8 @@ def index(request):
             'schools': schools,
             'subjects': subjects,
         }
+        print('logged index notes', notes)
+        logging.info('logged index notes', notes)
         return render(request, 'logged/index.html', context)
 
 def schools(request):

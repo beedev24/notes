@@ -40,13 +40,13 @@
                 {% if note.access == 0 %}
                     <tr>
                         <td>{{note.title}}</td>
-                        {% for subject in subjects %}
-                            {% if note.subject_id == subject.id %}
-                                <td>{{subject.title}}</td>
-                            {% else %}
-                                <td>N/A</td>
-                            {% endif %}
-                        {% endfor %}
+                        <td>
+                            {% for subject in subjects %}
+                                {% if note.subject_id == subject.id %}
+                                    {{subject.title}}
+                                {% endif %}
+                            {% endfor %}
+                            </td>
                         <td><button><a href="/schools/{{school.id}}/notes/{{note.id}}/view">View Note</a></button></td>
                     </tr>
                 {% endif %}

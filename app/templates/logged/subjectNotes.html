@@ -39,13 +39,13 @@
             {% for note in notes %}
                 <tr>
                     <td>{{note.title}}</td>
-                    {% for school in schools %}
-                        {% if note.school_id == school.id %}
-                            <td>{{school.name}}</td>
-                        {% else %}
-                            <td>N/A</td>
-                        {% endif %}
-                    {% endfor %}
+                    <td>
+                        {% for school in schools %}
+                            {% if note.school_id == school.id %}
+                                {{school.name}}
+                            {% endif %}
+                        {% endfor %}
+                    </td>
                     <td><button><a href="/subjects/{{subject.id}}/notes/{{note.id}}/view">View Note</a></button></td>
                 </tr>
             {% endfor %}
